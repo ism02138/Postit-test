@@ -1,0 +1,16 @@
+<h3>Viewing <%= @post.title %></h3>
+
+<h5>Comments:</h5>
+<ul>
+	<% @post.comments.each do |comment| %>
+		<li><%= comment.description %></li>
+	<% end %>
+</ul>
+
+<h5>Add comment:</h5>
+
+<%= form_for [@post, @comment] do |f| %>
+	<%= f.text_field :description %>
+	<br/>
+	<%= f.submit %>
+<% end %>
