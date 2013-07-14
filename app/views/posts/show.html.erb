@@ -1,16 +1,45 @@
-<h3>Viewing <%= @post.title %></h3>
+<div class="lead">
+  <h3><%= @post.title %>
+    <% if logged_in? && current_user == @post.creator %>  
+      <small>
+        <%= link_to '(edit)', edit_post_path(@post) %>
+      </small>
+    <% end %></h3>
+  <% @post.categories.each do |category| %>
+  <span class='label label-success'><%= category.name %></span>
+  <% end %>      
+  
+</div>
+  
+<div class="row">
+  <div class="span8 well"> 
+    <%= @post.description %>
+    <br/>
+    <span class="quiet">posted by</span>
+    <%= link_to @post.creator.username, @post.creator %>
+    <small>at <%= time_tag @post.created_at %></small>
+  </div>
+</div>
 
-<h5>Comments:</h5>
-<ul>
-	<% @post.comments.each do |comment| %>
-		<li><%= comment.description %></li>
-	<% end %>
-</ul>
+<% if logged_in? %>  
+  Leave a comment:
+  <%= form_for [@post, @comment] do |f| %>
+    <%= f.text_area :description %>
+    <br/>
+    <%= f.submit %>
+  <% end %>
+<% end %>
 
-<h5>Add comment:</h5>
-
-<%= form_for [@post, @comment] do |f| %>
-	<%= f.text_field :description %>
-	<br/>
-	<%= f.submit %>
+Comments:  
+<br/>
+<% @post.comments.each do |comment| %>
+  <div class="row">
+    <div class="span8 well">
+      <%= comment.description %>
+      <br/>
+      <span class="quiet">posted by</span>
+      <%= link_to comment.creator.username, comment.creator %>
+      <small>at <%= time_tag comment.created_at %></small>
+    </div>
+  </div>
 <% end %>

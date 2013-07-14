@@ -1,8 +1,25 @@
-<h3>Viewing <%= @category.name %></h3>
 
-<h5>Related posts:</h5>
-<ul>
-	<% @category.posts.each do |post| %>
-		<li><%= post.description %></li>
-	<% end %>
-</ul>
+<div class="row">
+  <div class="lead">
+    <%= render 'shared/header', header: "#{@category.name}" %>
+  </div>
+  <% @category.posts.each do |post| %>
+  <div class="row">
+    <div class="span8 well">
+      <%= link_to post.title, "http://#{post.url}" %>
+      <% if logged_in? && current_user == post.creator %>  
+        <small>
+          <%= link_to '(edit)', edit_post_path(post) %>
+        </small>
+      <% end %>
+      <br/>
+      <%= post.description %>
+      <br/>
+      <span class="quiet">posted by</span>
+      <%= link_to post.creator.username, post.creator %>
+      <small>at <%= time_tag post.created_at %>
+      <br/><%= link_to "#{post.comments.size} comments", post %></small>
+    </div>
+  </div>
+  <% end %>
+</div>

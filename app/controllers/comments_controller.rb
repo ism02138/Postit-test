@@ -1,18 +1,25 @@
 class CommentsController < ApplicationController
+  before_action :set_post
+  before_action :require_user, only: [:create]
 
 	def create
-		@post = Post.find(params[:post_id])
 		@comment = @post.comments.build(post_params)
  		if @comment.save
- 			redirect_to posts_path, notice: "Successfully created"
+      current_user.comments << @comment
+ 			redirect_to post_path(params[:post_id]), notice: "Comment created"
  		else
- 			render :new
+ 			render 'posts/show'
  		end
 	end
 
 	private
 
+  def set_post
+    @post = Post.find(params[:post_id])
+  end
+
  	def post_params
  		params.require(:comment).permit!
  	end
+
 end

@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="lead">
+    <%= render 'shared/header', header: "All posts by #{@user.username}" %>
+  </div>
+  <% @user.posts.each do |post| %>
+  <div class="row">
+    <div class="span8 well">
+      <% post.categories.each do |category| %>
+        <span class='label label-success'><%= link_to category.name, category %></span>
+      <% end %>
+      <br/>
+      <%= link_to post.title, post.url %>
+      <br/>
+      <%= post.description %>
+      <br/>
+      <small><span class="quiet">posted at </small><%= time_tag post.created_at %>
+      <br/><%= link_to "#{post.comments.size} comments", post %></small>
+    </div>
+  </div>
+  <% end %>
+</div>
