@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
   config.time_zone = 'Eastern Time (US & Canada)'
   helper_method :current_user, :logged_in? # can be used in controller and view
 
+  def require_admin
+    access_denied unless current_user && current_user.admin?
+  end
+
   def current_user # returns current user based on user_id
     @current ||= User.find(session[:user_id]) if session[:user_id] # memoization, if current nil then execute the rest
   end

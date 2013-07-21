@@ -12,10 +12,23 @@ class CommentsController < ApplicationController
  		end
 	end
 
+  def vote
+    @comment = Comment.find(params[:id])
+    if (Vote.find_by user_id: current_user.id, voteable: @comment) == nil
+      Vote.create(voteable: @comment, creator: current_user, vote: params[:vote])
+    end
+    respond_to do |format|
+      format.html do 
+        redirect_to :back, notice: "Your vote was counted"
+      end
+      format.js
+    end
+  end
+
 	private
 
   def set_post
-    @post = Post.find(params[:post_id])
+    @post = Post.find_by slug: params[:post_id]
   end
 
  	def post_params

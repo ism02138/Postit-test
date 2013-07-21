@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
-	before_action :set_post, only: [:show, :edit, :update]
-  before_action :require_user, only: [:new, :create, :update, :edit]
+	before_action :set_post, only: [:show, :edit, :update, :vote]
+  before_action :require_user, only: [:new, :create, :update, :edit, :vote]
   before_action :require_creator, only: [:update, :edit] # set_post must happen before, need @post
 
   def index
@@ -37,10 +37,22 @@ class PostsController < ApplicationController
  		end
  	end
 
+  def vote
+    if (Vote.find_by user_id: current_user.id, voteable: @post) == nil
+      Vote.create(voteable: @post, creator: current_user, vote: params[:vote])
+    end
+    respond_to do |format|
+      format.html do
+        redirect_to :back, notice: "Your vote was counted"
+      end
+      format.js
+    end
+  end
+
  	private
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by slug: params[:id]
   end
 
  	def post_params

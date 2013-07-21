@@ -4,27 +4,7 @@
   </div>
 
   <% @posts.each do |post| %>
-  <div class="row">
-    <div class="span8 well">
-	   	<% post.categories.each do |category| %>
-        <span class='label label-success'><%= link_to category.name, category %></span>
-      <% end %>
-      <br/>
-      <%= link_to post.title, "http://#{post.url}" %>
-      <% if logged_in? && current_user == post.creator %>  
-        <small>
-          <%= link_to '(edit)', edit_post_path(post) %>
-        </small>
-      <% end %>
-      <br/>
-      <%= post.description %>
-      <br/>
-      <span class="quiet">posted by</span>
-      <%= link_to post.creator.username, post.creator %>
-      <small>at <%= time_tag post.created_at %>
-      <br/><%= link_to "#{post.comments.size} comments", post %></small>
-    </div>
-  </div>
+      <%= render 'show_post', obj: post %>
   <% end %>
 </div>
 

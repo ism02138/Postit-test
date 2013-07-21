@@ -1,0 +1,30 @@
+ <div class="row">
+  <div class="span0 well text-center">
+    <% if current_user %>
+      <%= link_to vote_post_path(obj, vote: true), method: 'post', remote: true do %>
+        <i class='icon-arrow-up'></i>
+      <% end %>
+    <br/>
+    <% end %>
+    <span id="post_<%= obj.to_param %>_votes">
+      <%= pluralize(obj.total_votes, 'vote') %>
+    </span>
+    <% if current_user %>
+      <br/>
+      <%= link_to vote_post_path(obj, vote: false), method: 'post', remote: true do %>
+        <i class='icon-arrow-down'></i>
+      <% end %>
+    <% end %>
+  </div>  
+  <div class="span8 well">
+    <%= render 'shared/show_category_labels', obj: obj.categories %>
+    <br/>
+    <%= link_to obj.title, fix_url(obj.url) %>
+    <%= render 'shared/show_edit', obj: obj %>
+    <br/>
+    <%= obj.description %>
+    <br/>
+    <%= render 'shared/show_user_link', obj: obj.creator %>
+    <br/><%= link_to pluralize(obj.comments.size, 'comment'), obj %></small>
+  </div>
+</div>

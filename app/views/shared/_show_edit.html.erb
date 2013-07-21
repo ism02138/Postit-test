@@ -1,0 +1,5 @@
+<% if logged_in? && current_user == obj.creator %>  
+  <small>
+    <%= link_to '(edit)', edit_post_path(obj) %>
+  </small>
+<% end %>
