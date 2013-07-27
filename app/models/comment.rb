@@ -1,5 +1,8 @@
 class Comment < ActiveRecord::Base
-  has_many :votes, as: :voteable
+
+  include VoteableIsm
+
+#  has_many :votes, as: :voteable
   
 	belongs_to :creator, class_name: 'User', foreign_key: :user_id
 	belongs_to :post

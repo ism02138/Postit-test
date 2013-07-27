@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'voteable-ism'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -21,6 +22,7 @@ module PostitTemplate
     # config.i18n.default_locale = :de
 
     # Tealeaf note: Bootstrap sass gem addition
+    config.autoload_paths += %W(#{config.root}/extras)
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
 
   end

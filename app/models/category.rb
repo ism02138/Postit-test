@@ -1,4 +1,7 @@
 class Category < ActiveRecord::Base
+
+  #include VoteableIsm
+
 	has_many :post_categories
 	has_many :posts, through: :post_categories
 
