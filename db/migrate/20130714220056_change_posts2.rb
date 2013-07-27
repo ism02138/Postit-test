@@ -1,4 +1,4 @@
-class ChangePosts2 < ActiveRecord::Migration
+class ChangePostsAgain < ActiveRecord::Migration
   def change
      change_table :posts do |t|
       t.timestamps
