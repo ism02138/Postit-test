@@ -8,7 +8,8 @@ class CommentsController < ApplicationController
       current_user.comments << @comment
  			redirect_to post_path(params[:post_id]), notice: "Comment created"
  		else
- 			render 'posts/show'
+      flash[:error] = 'You must enter a comment'
+ 			redirect_to post_path(params[:post_id]) 
  		end
 	end
 

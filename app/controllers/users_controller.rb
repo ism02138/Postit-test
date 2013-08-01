@@ -6,7 +6,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(post_params)
     if @user.save
-      redirect_to login_path, notice: 'Successfully registered, now login'
+      session[:user_id] = User.find_by(params[:username])
+      redirect_to root_path, notice: 'Successfully registered, post away'
     else
       render :new
     end
