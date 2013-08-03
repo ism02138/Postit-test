@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 
     msg = "Hi, please input the pin to log into Postit: #{self.pin}"
     account = client.account
-    message = account.sms.messages.create({:from => '+19193238477', :to => '9194915068', :body => msg})
+    message = account.sms.messages.create({:from => '+19193238477', :to => self.phone, :body => msg})
   end
 
   def remove_pin!
